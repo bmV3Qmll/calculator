@@ -1,0 +1,60 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #000;
+	color: white;
+}
+.container {
+	position: relative;
+	top: 100px;
+	width: 100%;
+	max-width: 240px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #222;
+}
+.output {
+	height: 80px;
+	width: 100%;
+	outline: none;
+	border: none;
+	font-size: 40px;
+	margin-bottom: 10px;
+	text-align: right;
+	color: white;
+}
+.input {
+	width: 100%;
+	border-spacing: 10px 10px;
+	table-layout: fixed;
+}
+.input button {
+	width: 100%;
+	padding: 14px;
+	border-radius: 30px;
+	border: none;
+	background-color: #555;
+	color: white;
+	font-size: 14px;
+}
+.input tr:first-child button {
+	background-color: grey;
+	color: black;
+}
+.input td:nth-child(4) button {
+	background-color: orange;
+	color: white;
+}
+.input tr:last-child td:last-child button {
+	background-color: orange;
+}
+.invert {
+	background-color: white !important;
+	color: orange !important;
+}
