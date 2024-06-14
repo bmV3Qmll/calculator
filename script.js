@@ -156,7 +156,11 @@ function handle(event) {
 	}
 
 	let s = output.value;
-	console.log(s);
+
+	let ss = s.split('.')
+	if (ss.length == 2 && ss[0].length + ss[1].length > 10) {
+		s = s.slice(0, ss[0].length + 1 + 6);
+	}
 	if (regex.test(s)) {
 		s = s.slice(0, -1);
 		if (s.endsWith('9')) {
@@ -177,7 +181,6 @@ function handle(event) {
 	}
 	while (output.scrollWidth > output.clientWidth) {
 		output.value = output.value.slice(0, -1);
-
 	}
 }
 
