@@ -156,13 +156,15 @@ function handle(event) {
 	}
 
 	let s = output.value;
+	console.log(s);
 	if (regex.test(s)) {
 		s = s.slice(0, -1);
 		if (s.endsWith('9')) {
 			s = s.replace(/9*$/, '');
 			lastChar = s[s.length - 1];
 			if (lastChar == '.') {
-				lastChar = s[s.length - 2];
+				s = s.slice(0, -1);
+				lastChar = s[s.length - 1];
 			}
 			lastDigit = Number(lastChar) + 1;
 			output.value = s.slice(0, -1) + String(lastDigit);
