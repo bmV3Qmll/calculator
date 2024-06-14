@@ -148,7 +148,7 @@ function handle(event) {
 			neg = false;
 		}
 		if (!start) {
-			if (v == "0" && ac.value = "AC") break;
+			if (v == "0" && ac.value == "AC") break;
 			if (v == '.') {
 				output.value = "0.";
 			} else {
