@@ -3,12 +3,15 @@ var start = false;
 output.value = "0";
 const ac = document.getElementById("AC");
 
+regex = /-?\d*\.\d*?(?:0000|9999)\d$/;
+
 var lt = null;
 var op = null;
 var curr = null;
 var rt = null;
 var op2 = null;
 var onOp = false;
+var neg = false;
 
 function cal(a, oper, b) {
 	switch (oper) {
@@ -31,6 +34,7 @@ function reset() {
 	rt = null;
 	op2 = null;
 	start = false;
+	neg = false;
 }
 
 function hard_reset() {
@@ -56,9 +60,13 @@ function handle(event) {
 	case "+/-":
 		if (output.value[0] == '-') {
 			output.value = output.value.slice(1);
-			// output.style.fontSize = "40px";
+			neg = false;
 		} else {
 			output.value = '-' + output.value;
+			if (output.scrollWidth > output.clientWidth) {
+				output.style.fontSize = "38px";
+			}
+			neg = true;
 		}
 		break;
 	case "%":
@@ -74,10 +82,12 @@ function handle(event) {
  		if (op2) {
 			rt = cal(rt, op2, Number(output.value));
 			output.value = String(rt);
+			neg = false;
 			op2 = null;
  		} else if (op && "*/".includes(op)) {
  			lt = cal(lt, op, Number(output.value));
  			output.value = String(lt);
+ 			neg = false;
  			op = null;
  		}
  		if (onOp) {
@@ -113,13 +123,15 @@ function handle(event) {
 		if (!start) {
 			output.value = "0.";
 			start = true;
+			ac.textContent = "C";
+			ac.value = "C";
 			break;
 		}
 	default:
 		if (onOp) {
 			curr.classList.toggle("invert");
-			onOp = false
-			if (op) {
+			onOp = false;
+			if (op) {	
 				if ("+-".includes(curr.value)) {
 					lt = cal(lt, op, Number(output.value));
 					if (rt) rt = null;
@@ -133,11 +145,15 @@ function handle(event) {
 				op = curr.value;
 			}
 			start = false;
+			neg = false;
 		}
 		if (!start) {
-			console.log("hey")
 			if (v == "0") break;
-			output.value = v;
+			if (v == '.') {
+				output.value = "0.";
+			} else {
+				output.value = v;
+			}
 			start = true;
 			ac.textContent = "C";
 			ac.value = "C";
@@ -145,9 +161,24 @@ function handle(event) {
 			output.value = output.value + v;
 		}
 	}
-	let isOverflowed = output.scrollWidth > output.clientWidth;
-	if (isOverflowed) {
+
+	let s = output.value;
+	if (regex.test(s)) {
+		s = s.slice(0, -1);
+		if (s.endsWith('9')) {
+			s = s.replace(/9*$/, '');
+			lastDigit = Number(s[s.length - 1]) + 1;
+			output.value = s.slice(0, -1) + String(lastDigit);
+		} else {
+			output.value = s.slice(0, -1).replace(/0*$/, '');
+		}
+	}
+	if (output.style.fontSize == "38px" && !neg) {
+		output.style.fontSize = "40px";
+	}
+	while (output.scrollWidth > output.clientWidth) {
 		output.value = output.value.slice(0, -1);
+
 	}
 }
 
