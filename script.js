@@ -120,18 +120,11 @@ function handle(event) {
  		hard_reset();
 		break;
 	case '.':
-		if (!start) {
-			output.value = "0.";
-			start = true;
-			ac.textContent = "C";
-			ac.value = "C";
-			break;
-		}
 	default:
 		if (onOp) {
 			curr.classList.toggle("invert");
 			onOp = false;
-			if (op) {	
+			if (op) {
 				if ("+-".includes(curr.value)) {
 					lt = cal(lt, op, Number(output.value));
 					if (rt) rt = null;
