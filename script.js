@@ -160,7 +160,11 @@ function handle(event) {
 		s = s.slice(0, -1);
 		if (s.endsWith('9')) {
 			s = s.replace(/9*$/, '');
-			lastDigit = Number(s[s.length - 1]) + 1;
+			lastChar = s[s.length - 1];
+			if (lastChar == '.') {
+				lastChar = s[s.length - 2];
+			}
+			lastDigit = Number(lastChar) + 1;
 			output.value = s.slice(0, -1) + String(lastDigit);
 		} else {
 			output.value = s.slice(0, -1).replace(/0*$/, '');
